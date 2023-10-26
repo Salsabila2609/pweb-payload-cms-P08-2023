@@ -17,13 +17,17 @@ const Todo = {
       name: "deadline",
       type: "text",
       required: true,
-    },    
+    },   
     {
-      name: "priority",
-      type: "select", // Menambahkan field priority
-      options: ["Low", "Medium", "High"], // Menyediakan opsi priority
-      required: true,
-    }
+      name: "Category",
+      type: "relationship", 
+      relationTo: "Category", 
+      hasMany: false,
+    },
+    {
+      name: "status",
+      type: "text",
+    },  
   ]
 };
 

@@ -36,7 +36,7 @@
           <select v-model="inputNewPriority" class="px-3 py-2 bg-white rounded-md focus:outline-sky-800 cursor-pointer">
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
-            <option value="High">High</option>
+            <!-- <option value="High">High</option> -->
           </select>
         </div>
       </div>

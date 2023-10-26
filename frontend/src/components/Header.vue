@@ -27,7 +27,10 @@ export default {
 
 <template>
   <span class="font-bold text-4xl text-sky-800">Smart To Do</span>
-  <span class="font-base text-sm text-slate-400">{{ todoStore.todos.length }} To Do</span>
+    <span class="font-base text-sm text-slate-400">
+    <span v-if="todoStore.todos && todoStore.todos.length > 0">{{ todoStore.todos.length }} To Do</span>
+    <span v-else>No To Do Items</span>
+  </span>
   <div class="w-full flex justify-end gap-3">
     <button @click="togglePopup" class="px-6 py-2 bg-green-600 text-white font-bold mb-2 w-fit border-[1.5px] 
     hover:scale-110 transition-all hover:ease-in-out hover:duration-300 rounded-xl text-sm">+ Add</button>

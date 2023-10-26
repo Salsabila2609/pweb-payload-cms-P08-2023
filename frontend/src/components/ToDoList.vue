@@ -6,7 +6,7 @@
           <th class="p-1 text-sm font-bold tracking-wide text-white">No.</th>
           <th class="p-3 text-sm font-bold tracking-wide text-white">Tasks</th>
           <th class="p-1 text-sm font-bold tracking-wide text-white">Deadline</th>
-          <th class="p-1 text-sm font-bold tracking-wide text-white">Priority</th>
+          <th class="p-1 text-sm font-bold tracking-wide text-white">Category</th>
           <th class="p-1 text-sm font-bold tracking-wide text-white">Status</th>
           <th class="p-1 text-sm font-bold tracking-wide text-white">Actions</th>
         </tr>
@@ -23,7 +23,8 @@
             {{ todo.deadline }}
           </th>
           <th class="p-3 text-sm text-gray-700 font-normal" :class="todoClasses(todo)">
-            {{ todo.priority }}
+            <span v-if="todo.Category">{{ todo.Category.name }}</span>
+            <span v-else>No Category</span>
           </th>
           <th class="p-3 text-sm text-gray-700 font-normal">
             <select
@@ -89,7 +90,7 @@ export default {
         'text-gray-700': true,
         'font-normal': true,
         'strikethrough': todo.status === '3',
-        'highlight': todo.priority === 'High',
+        'highlight': todo.Category.name === 'high',
       };
       return classes;
     },
@@ -106,8 +107,19 @@ export default {
           });
       }
     },
-    updateStatus(todo) {
-    },
+  updateStatus(todo) {
+    const apiUrl = `http://localhost:3000/api/todo/${todo.id}`;
+
+
+    axios
+      .put(apiUrl, { status: todo.status })
+      .then((response) => {
+        console.log("Status updated successfully.");
+      })
+      .catch((error) => {
+        console.error("Error updating status: ", error);
+      });
+  }
   },
 };
 </script>
