@@ -75,7 +75,7 @@ export default {
   methods: {
     fetchTodoData() {
       axios
-        .get("http://localhost:3000/api/todo") 
+        .get("http://localhost:3000/api/todo")
         .then((response) => {
           this.todos = response.data.docs;
         })
@@ -85,12 +85,12 @@ export default {
     },
     todoClasses(todo) {
       const classes = {
-        'p-3': true,
-        'text-sm': true,
-        'text-gray-700': true,
-        'font-normal': true,
-        'strikethrough': todo.status === '3',
-        'highlight': todo.Category.name === 'high',
+        "p-3": true,
+        "text-sm": true,
+        "text-gray-700": true,
+        "font-normal": true,
+        strikethrough: todo.status === "3",
+        highlight: todo.Category.name === "high",
       };
       return classes;
     },
@@ -107,19 +107,18 @@ export default {
           });
       }
     },
-  updateStatus(todo) {
-    const apiUrl = `http://localhost:3000/api/todo/${todo.id}`;
+    updateStatus(todo) {
+      const apiUrl = `http://localhost:3000/api/todo/${todo.id}`;
 
-
-    axios
-      .put(apiUrl, { status: todo.status })
-      .then((response) => {
-        console.log("Status updated successfully.");
-      })
-      .catch((error) => {
-        console.error("Error updating status: ", error);
-      });
-  }
+      axios
+        .put(apiUrl, { status: todo.status })
+        .then((response) => {
+          console.log("Status updated successfully.");
+        })
+        .catch((error) => {
+          console.error("Error updating status: ", error);
+        });
+    },
   },
 };
 </script>

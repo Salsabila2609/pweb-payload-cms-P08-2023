@@ -33,20 +33,20 @@
         </div>
         <div class="flex flex-col gap-1">
           <label class="text-sky-800 font-semibold">Priority</label>
-          <select v-model="inputNewPriority" class="px-3 py-2 bg-white rounded-md focus:outline-sky-800 cursor-pointer">
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <!-- <option value="High">High</option> -->
+          <select v-model="inputNewCategory" class="px-3 py-2 bg-white rounded-md focus:outline-sky-800 cursor-pointer">
+            <option v-for="Category in priorities" :key="Category.id" :value="Category.id" class="cursor-pointer">{{ Category.name }}</option>
           </select>
         </div>
       </div>
-      <button @click="updateTodo(this.id)" class="px-4 py-2 mt-4 bg-sky-800 text-sky-100 font-bold text-sm rounded-lg hover:bg-sky-800 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none"></button>
+      <button @click="updateTodo" class="px-4 py-2 mt-4 bg-sky-800 text-sky-100 font-bold text-sm rounded-lg hover:bg-sky-800 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none">Update</button>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import { todoStore } from "../store/store.js";
+
 export default {
   data() {
     return {
@@ -54,30 +54,58 @@ export default {
       id: this.$route.params.id,
       inputNewName: "",
       inputNewDeadline: "",
-      inputNewPriority: "",
+      inputNewCategory: "",
+      priorities: [], // Menyimpan daftar kategori
       originalStatus: null,
     };
   },
   methods: {
-    getTodoById() {
-      const todo = this.todoStore.todos.find((todo) => todo.id === parseInt(this.id) || todo.id === this.id);
+    async getTodoById() {
+      // Mengambil data todo dari server
+      const todo = await this.fetchTodoById(this.id);
       if (todo) {
         this.inputNewName = todo.name;
         this.inputNewDeadline = todo.Deadline;
-        this.inputNewPriority = todo.Priority;
+        this.inputNewCategory = todo.Category;
         this.originalStatus = todo.status;
       }
     },
-    updateTodo(index) {
+    async fetchTodoById(id) {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/todo/${id}`);
+        return response.data; // Mengembalikan data todo
+      } catch (error) {
+        console.error("Error fetching todo: ", error);
+        return null;
+      }
+    },
+    async fetchCategories() {
+      // Mengambil daftar kategori dari server
+      try {
+        const response = await axios.get("http://localhost:3000/api/category");
+        this.priorities = response.data.docs; // Menyimpan daftar kategori
+      } catch (error) {
+        console.error("Error fetching categories: ", error);
+      }
+    },
+    async updateTodo() {
       const updatedTodo = {
-        id: index,
+        id: this.id,
         name: this.inputNewName,
         Deadline: this.inputNewDeadline,
-        Priority: this.inputNewPriority,
+        Category: this.inputNewCategory,
         status: this.originalStatus,
       };
-      this.todoStore.updateTodo(updatedTodo);
-      this.$router.push("/");
+
+      try {
+        // Mengirim pembaruan langsung ke server
+        await axios.put(`http://localhost:3000/api/todo/${this.id}`, updatedTodo);
+
+        // Tidak perlu memanggil this.todoStore.updateTodo lagi, karena Anda telah mengirimkan pembaruan langsung ke server
+        this.$router.push("/");
+      } catch (error) {
+        console.error("Error updating data: ", error);
+      }
     },
     startSpeechRecognition() {
       const speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -91,8 +119,9 @@ export default {
       recognition.start();
     },
   },
-  mounted() {
-    this.getTodoById();
+  async mounted() {
+    await this.getTodoById();
+    await this.fetchCategories();
   },
 };
 </script>
