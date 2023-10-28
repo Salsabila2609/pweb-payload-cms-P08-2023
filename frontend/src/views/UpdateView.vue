@@ -73,14 +73,13 @@ export default {
     async fetchTodoById(id) {
       try {
         const response = await axios.get(`http://localhost:3000/api/todo/${id}`);
-        return response.data; // Mengembalikan data todo
+        return response.data;
       } catch (error) {
         console.error("Error fetching todo: ", error);
         return null;
       }
     },
     async fetchCategories() {
-      // Mengambil daftar kategori dari server
       try {
         const response = await axios.get("http://localhost:3000/api/category");
         this.priorities = response.data.docs; // Menyimpan daftar kategori
@@ -98,10 +97,7 @@ export default {
       };
 
       try {
-        // Mengirim pembaruan langsung ke server
         await axios.put(`http://localhost:3000/api/todo/${this.id}`, updatedTodo);
-
-        // Tidak perlu memanggil this.todoStore.updateTodo lagi, karena Anda telah mengirimkan pembaruan langsung ke server
         this.$router.push("/");
       } catch (error) {
         console.error("Error updating data: ", error);

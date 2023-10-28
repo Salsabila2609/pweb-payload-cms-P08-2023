@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   data() {
@@ -54,14 +54,14 @@ export default {
         name: this.inputName,
         deadline: this.inputDeadline,
         Category: this.inputCategory,
-        status: "1", 
+        status: "1",
       };
 
       axios
-        .post('http://localhost:3000/api/todo', newTodo)
+        .post("http://localhost:3000/api/todo", newTodo)
         .then((response) => {
-          console.log('Todo added successfully:', response.data);
-          this.$emit('todo-added', response.data);
+          console.log("Todo added successfully:", response.data);
+          this.$emit("todo-added", response.data);
 
           this.inputName = "";
           this.inputDeadline = "";
@@ -69,7 +69,7 @@ export default {
           this.$emit("close-popup");
         })
         .catch((error) => {
-          console.error('Error adding todo:', error);
+          console.error("Error adding todo:", error);
         });
       window.location.reload();
     },
@@ -85,12 +85,12 @@ export default {
     },
     fetchPrioritiesFromAPI() {
       axios
-        .get('http://localhost:3000/api/category')
+        .get("http://localhost:3000/api/category")
         .then((response) => {
           this.priorities = response.data.docs;
         })
         .catch((error) => {
-          console.error('Error fetching priorities from API:', error);
+          console.error("Error fetching priorities from API:", error);
         });
     },
   },
