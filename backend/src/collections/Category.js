@@ -19,7 +19,7 @@ const Category = {
             collection: "log",
             data: {
               collectionName: "Category",
-              action: "Create",
+              action: "create",
               timestamp: new Date(),
               Category: args.result.id,
             },
@@ -29,7 +29,7 @@ const Category = {
             collection: "log",
             data: {
               collectionName: "Category",
-              action: "Delete",
+              action: "delete",
               timestamp: new Date(),
               Category: args.result.id,
             },
@@ -39,7 +39,7 @@ const Category = {
             collection: "log",
             data: {
               collectionName: "Category",
-              action: "Update",
+              action: "update",
               timestamp: new Date(),
               Category: args.result.id,
             },

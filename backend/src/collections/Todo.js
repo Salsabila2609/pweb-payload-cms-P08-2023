@@ -18,8 +18,8 @@ const Todo = {
           payload.create({
             collection: "log",
             data: {
-              collectionName: "Todo",
-              action: "Create",
+              collectionName: "todo",
+              action: "create",
               timestamp: new Date(),
               Todo: args.result.id,
             },
@@ -28,18 +28,18 @@ const Todo = {
           payload.create({
             collection: "log",
             data: {
-              collectionName: "Todo",
-              action: "Delete",
+              collectionName: "todo",
+              action: "delete",
               timestamp: new Date(),
               Todo: args.result.id,
             },
           });
         } else if (args.operation === "updateByID") {
           payload.create({
-            collection: "Todo",
+            collection: "log",
             data: {
               collectionName: "todo",
-              action: "Update",
+              action: "update",
               timestamp: new Date(),
               Todo: args.result.id,
             },
