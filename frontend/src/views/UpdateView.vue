@@ -32,7 +32,7 @@
           <input type="date" v-model="inputNewDeadline" class="px-3 py-2 bg-white rounded-md focus:outline-sky-800 cursor-pointer" />
         </div>
         <div class="flex flex-col gap-1">
-          <label class="text-sky-800 font-semibold">Priority</label>
+          <label class="text-sky-800 font-semibold">Category</label>
           <select v-model="inputNewCategory" class="px-3 py-2 bg-white rounded-md focus:outline-sky-800 cursor-pointer">
             <option v-for="Category in priorities" :key="Category.id" :value="Category.id" class="cursor-pointer">{{ Category.name }}</option>
           </select>
@@ -65,7 +65,7 @@ export default {
       const todo = await this.fetchTodoById(this.id);
       if (todo) {
         this.inputNewName = todo.name;
-        this.inputNewDeadline = todo.Deadline;
+        this.inputNewDeadline = todo.deadline;
         this.inputNewCategory = todo.Category;
         this.originalStatus = todo.status;
       }
@@ -91,7 +91,7 @@ export default {
       const updatedTodo = {
         id: this.id,
         name: this.inputNewName,
-        Deadline: this.inputNewDeadline,
+        deadline: this.inputNewDeadline,
         Category: this.inputNewCategory,
         status: this.originalStatus,
       };

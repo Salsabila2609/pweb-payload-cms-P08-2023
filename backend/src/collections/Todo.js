@@ -5,7 +5,7 @@ const Todo = {
     read: () => true,
     update: () => true,
     delete: () => true,
-    create: () => true
+    create: () => true,
   },
   fields: [
     {
@@ -17,18 +17,24 @@ const Todo = {
       name: "deadline",
       type: "text",
       required: true,
-    },   
+    },
     {
       name: "Category",
-      type: "relationship", 
-      relationTo: "Category", 
+      type: "relationship",
+      relationTo: "Category",
       hasMany: false,
     },
     {
       name: "status",
-      type: "text",
-    },  
-  ]
+      type: "select",
+      options: [
+        { label: "Nothing", value: "1" },
+        { label: "On Progress", value: "2" },
+        { label: "Finished", value: "3" },
+      ],
+      required: true,
+    },
+  ],
 };
 
 export default Todo;

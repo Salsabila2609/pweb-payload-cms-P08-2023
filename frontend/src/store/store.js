@@ -1,15 +1,5 @@
 import { reactive } from "vue";
 
-// Fungsi untuk menyimpan data ke local storage (tidak digunakan)
-const saveToLocalStorage = (key, data) => {
-  // Kosongkan atau hapus fungsi ini
-};
-
-// Fungsi untuk mengambil data dari local storage (tidak digunakan)
-const getFromLocalStorage = (key) => {
-  // Kosongkan atau hapus fungsi ini
-};
-
 export const todoStore = reactive({
   todos: [],
 
@@ -26,4 +16,8 @@ export const todoStore = reactive({
       this.todos.push(updatedtodo);
     }
   },
+
+  // deleteAllTodos() {
+  //   this.todos = [];
+  // },
 });

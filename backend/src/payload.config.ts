@@ -1,16 +1,16 @@
-import path from 'path'
+import path from "path";
 
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { webpackBundler } from '@payloadcms/bundler-webpack'
-import { slateEditor } from '@payloadcms/richtext-slate'
-import { buildConfig } from 'payload/config'
+import { mongooseAdapter } from "@payloadcms/db-mongodb";
+import { webpackBundler } from "@payloadcms/bundler-webpack";
+import { slateEditor } from "@payloadcms/richtext-slate";
+import { buildConfig } from "payload/config";
 
-import Users from './collections/Users'
-import Todo from './collections/Todo'
-import Category from './collections/Category'
+import Users from "./collections/Users";
+import Todo from "./collections/Todo";
+import Category from "./collections/Category";
 
 export default buildConfig({
-  cors : "*",
+  cors: "*",
   admin: {
     user: Users.slug,
     bundler: webpackBundler(),
@@ -18,9 +18,9 @@ export default buildConfig({
   editor: slateEditor({}),
   collections: [Users, Todo, Category],
   typescript: {
-    outputFile: path.resolve(__dirname, 'payload-types.ts'),
+    outputFile: path.resolve(__dirname, "payload-types.ts"),
   },
   db: mongooseAdapter({
     url: process.env.DATABASE_URI,
   }),
-})
+});
