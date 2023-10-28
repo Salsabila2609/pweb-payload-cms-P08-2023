@@ -2,7 +2,7 @@
 import { todoStore } from "../store/store.js";
 import Popup from "../components/Popup.vue";
 import AddToDo from "../components/AddToDo.vue";
-import qs from "qs";
+import axios from "axios";
 
 export default {
   components: {
@@ -16,33 +16,19 @@ export default {
     };
   },
   methods: {
-    async deleteAllTodos() {
-      const stringifiedQuery = qs.stringify(
-        {
-          where: null,
-        },
-        { addQueryPrefix: true }
-      );
-
-      try {
-        const req = await fetch("http://localhost:3000/api/todo", {
-          method: "DELETE",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: stringifiedQuery,
-        });
-        const data = await req.json();
-
-        if (data.status === "success") {
-          // Clear the To Do list.
-          this.todoStore.todos = [];
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    },
+    // deleteAllTodos() {
+    //   const confirmation = window.confirm("Are you sure you want to delete all todos?");
+    //   if (confirmation) {
+    //     axios
+    //       .delete(`http://localhost:3000/api/todos`)
+    //       .then(() => {
+    //         todoStore.todos = [];
+    //       })
+    //       .catch((error) => {
+    //         console.error("Error deleting all todos: ", error);
+    //       });
+    //   }
+    // },
     togglePopup() {
       this.isPopup = !this.isPopup;
     },
@@ -61,6 +47,6 @@ export default {
     <Popup @close-Popup="togglePopup" :isPopup="isPopup">
       <AddToDo @close-Popup="togglePopup" />
     </Popup>
-    <button @click="deleteAllTodos" class="px-6 py-2 bg-red-700 text-white font-bold mb-2 w-fit border-[1.5px] hover:scale-110 transition-all hover:ease-in-out hover:duration-300 rounded-xl text-sm">- Delete All</button>
+    <!-- <button @click="deleteAllTodos" class="px-6 py-2 bg-red-700 text-white font-bold mb-2 w-fit border-[1.5px] hover:scale-110 transition-all hover:ease-in-out hover:duration-300 rounded-xl text-sm">- Delete All</button> -->
   </div>
 </template>

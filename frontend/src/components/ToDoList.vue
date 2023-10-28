@@ -93,7 +93,7 @@ export default {
       return classes;
     },
     deleteTodo(todoId) {
-      const confirmation = window.confirm("Are you sure you want to delete this task?");
+      const confirmation = window.confirm("Are you sure you want to delete this todo?");
       if (confirmation) {
         axios
           .delete(`http://localhost:3000/api/todo/${todoId}`)

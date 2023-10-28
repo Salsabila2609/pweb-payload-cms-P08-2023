@@ -17,7 +17,7 @@ export const todoStore = reactive({
     }
   },
 
-  // deleteAllTodos() {
-  //   this.todos = [];
-  // },
+  deleteAllTodos() {
+    this.todos = [];
+  },
 });

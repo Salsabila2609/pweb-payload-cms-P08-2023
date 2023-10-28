@@ -45,12 +45,10 @@
 
 <script>
 import axios from "axios";
-import { todoStore } from "../store/store.js";
 
 export default {
   data() {
     return {
-      todoStore,
       id: this.$route.params.id,
       inputNewName: "",
       inputNewDeadline: "",

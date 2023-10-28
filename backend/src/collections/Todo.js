@@ -1,8 +1,8 @@
-import payload from 'payload'
-/** @type {import('payload/types').CollectionConfig} */
+import payload from "payload";
+
 const Todo = {
   slug: "Todo",
-  admin : {
+  admin: {
     useAsTitle: "name",
   },
   access: {
@@ -11,55 +11,43 @@ const Todo = {
     delete: () => true,
     create: () => true,
   },
-
   hooks: {
-        afterOperation: [
-            async (args) => {
-                if (args.operation == "create") {
-                    payload.create({
-                        collection: "log",
-                        data: {
-                            collectionName: "todo",
-                            action : "create",
-                            timestamp: new Date(),
-                            Todo: args.result.id
-                        },
-                    });
-                } else if (args.operation == "update") {
-                    payload.create({
-                        collection: "log",
-                        data: {
-                            collectionName: "todo",
-                            action : "update",
-                            timestamp: new Date(),
-                            Todo: args.result.id
-                        },
-                    });
-                } else if (args.operation == "delete") {
-                    payload.create({
-                        collection: "log",
-                        data: {
-                            collectionName: "todo",
-                            action : "delete",
-                            timestamp: new Date(),
-                            Todo: args.result.id
-                        },
-                    });
-                } else if (args.operation == "findByID") {
-                  payload.create({
-                      collection: "log",
-                      data: {
-                          collectionName: "todo",
-                          action : "read",
-                          timestamp: new Date(),
-                          Todo: args.result.id
-                      },
-                  });
-              } 
+    afterOperation: [
+      async (args) => {
+        if (args.operation === "create") {
+          payload.create({
+            collection: "log",
+            data: {
+              collectionName: "Todo",
+              action: "Create",
+              timestamp: new Date(),
+              Todo: args.result.id,
             },
-        ],
-    },
-  
+          });
+        } else if (args.operation === "deleteByID") {
+          payload.create({
+            collection: "log",
+            data: {
+              collectionName: "Todo",
+              action: "Delete",
+              timestamp: new Date(),
+              Todo: args.result.id,
+            },
+          });
+        } else if (args.operation === "updateByID") {
+          payload.create({
+            collection: "Todo",
+            data: {
+              collectionName: "todo",
+              action: "Update",
+              timestamp: new Date(),
+              Todo: args.result.id,
+            },
+          });
+        }
+      },
+    ],
+  },
   fields: [
     {
       name: "name",
